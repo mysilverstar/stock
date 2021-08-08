@@ -1,0 +1,108 @@
+.header_main {
+  height: 70px;
+  line-height: 60px;
+  border-bottom: solid gray thin;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 5px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  background-color: #111111;
+}
+.header_main .username {
+  font-size: large;
+  margin-left: 20px;
+}
+
+.header_main .logout {
+  display: flex;
+  align-items: center;
+  line-height: 70px;
+  position: absolute;
+  right: 3%;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.header_main .logout span {
+  margin-right: 5px;
+}
+
+.main {
+  padding: 80px 5px 10px;
+}
+
+.fab-area {
+  width: 70vw;
+  display: flex;
+  justify-content: space-around;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 30px;
+}
+.fab-area.unselect {
+  bottom: 0;
+}
+.fab-area.select {
+  bottom: -90px;
+}
+
+.slidein {
+  animation-duration: 0.5s;
+  animation-name: slidein;
+  animation-fill-mode: forwards;
+}
+@keyframes slidein {
+  from {
+    bottom: -90px;
+  }
+  to {
+    bottom: 0px;
+  }
+}
+
+.slideout {
+  animation-duration: 0.5s;
+  animation-name: slideout;
+  animation-fill-mode: forwards;
+}
+@keyframes slideout {
+  from {
+    bottom: 0px;
+  }
+  to {
+    bottom: -90px;
+  }
+}
+
+.fadeout {
+  animation-duration: 0.5s;
+  animation-name: fadeout;
+  animation-fill-mode: forwards;
+}
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fadein {
+  animation-duration: 1s;
+  animation-name: fadein;
+  animation-fill-mode: forwards;
+}
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

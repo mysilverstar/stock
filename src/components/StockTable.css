@@ -1,0 +1,63 @@
+.stocktable {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 auto 60px;
+  max-width: 800px;
+}
+
+.stocktable .table_title {
+  text-align: left;
+  margin-bottom: 5px;
+  padding-left: 3%;
+}
+
+.stocktable table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.stocktable th.stock_name {
+  width: 35%;
+}
+.stocktable th.stock_indate,
+.stocktable th.stock_price {
+  width: 25%;
+}
+.stocktable th.stock_quantity {
+  width: 18%;
+}
+.stocktable th {
+  padding: 5px 15px;
+  color: gray;
+  border-bottom: thin double gray;
+}
+.stocktable tbody tr {
+  border: solid gray;
+  border-width: 0 0 thin;
+}
+.stocktable tbody tr.selected {
+  background-color: #1f1f1f;
+}
+.stocktable tbody td {
+  height: 40px;
+  padding: 10px 0;
+  vertical-align: top;
+}
+.stocktable .item_name {
+  padding-left: 3%;
+}
+.stocktable .item_price {
+  text-align: right;
+  padding-right: 3%;
+}
+.stocktable .item_quantity,
+.stocktable .item_date {
+  text-align: center;
+}
+.stocktable .main_text {
+  display: block;
+}
+.stocktable .sub_text {
+  font-size: 70%;
+  color: gray;
+}

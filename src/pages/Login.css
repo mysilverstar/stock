@@ -1,0 +1,23 @@
+.login_main {
+  height: 100%;
+  text-align: center;
+}
+
+.login_main .title {
+  margin-top: 20vh;
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.login_main .button {
+  margin-top: 55vh;
+}
+
+.login_main .guest_button {
+  width: 220px;
+  height: 40px;
+  margin: 12px auto;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+}
