@@ -73,6 +73,7 @@ function AddStock({ setOpen, store, selectedItem, handleItemSelect }) {
   const [date, setDate] = useState(sDate);
 
   const { authenticate } = store;
+  const isModified = selectedItem !== null;
 
   const handleChangeTrading = (event) => {
     setTradingIndex(event.target.value);
@@ -138,6 +139,7 @@ function AddStock({ setOpen, store, selectedItem, handleItemSelect }) {
             onChange={handleChangeTrading}
             className={classes.selectEmpty}
             required={true}
+            disabled={isModified}
           >
             {Tradings.map((trading, index) => (
               <MenuItem key={trading.key} value={index}>
@@ -154,6 +156,7 @@ function AddStock({ setOpen, store, selectedItem, handleItemSelect }) {
             onChange={handleNameChange}
             label="Name"
             required={true}
+            disabled={isModified}
           />
         </FormControl>
         <FormControl variant="outlined" className={classes.formInput}>
