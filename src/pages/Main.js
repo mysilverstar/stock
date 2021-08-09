@@ -51,7 +51,7 @@ function Main({ history, store, doLogout, setLoading }) {
       .onSnapshot((snapshot) => {
         setTimeout(() => {
           setLoading(false);
-        }, 400);
+        }, 500);
         setTradings(
           snapshot.docs.map((doc) => ({
             key: doc.id,

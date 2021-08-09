@@ -10,7 +10,7 @@ import LoadingTool from "./components/LoadingTool";
 function App({ store, doLogin }) {
   const { authenticate } = store;
   const [loading, setLoading] = useState(true);
-  console.log("App START", authenticate);
+  console.log("App START");
 
   useEffect(() => {
     console.log("App RENDERED");
