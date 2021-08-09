@@ -11,6 +11,35 @@ function StockTable({ trading, store, handleItemSelect }) {
   const { color, display } = data;
   const { authenticate } = store;
 
+  const handleItemClick = (e) => {
+    handleItemSelect({
+      target: e.currentTarget,
+      tradingKey: key,
+    });
+    e.stopPropagation();
+  };
+
+  const getDateState = (item) => {
+    const date = new Date(item.indate);
+    date.setHours(9, 0, 0, 0);
+    const now = new Date();
+    const diff = (now.getTime() - date.getTime()) / (1000 * 3600 * 24);
+    let changeStyle = { color: "dimgray" };
+    let ddayState = 0;
+    if (diff >= 0 && diff < 1) {
+      changeStyle = { color: "chartreuse" };
+      ddayState = 1;
+    } else if (diff >= -2 && diff < 0) {
+      changeStyle = { color: "red" };
+      ddayState = 2;
+    } else if (diff < -2) {
+      changeStyle = { color: "darkgreen" };
+    }
+    const displayDate = date.getMonth() + 1 + "/" + date.getDate();
+
+    return { ddayState, changeStyle, displayDate };
+  };
+
   useEffect(() => {
     const unsubscribe = db
       .collection("user")
@@ -49,29 +78,9 @@ function StockTable({ trading, store, handleItemSelect }) {
         </thead>
         <tbody>
           {items.map((item) => {
-            const date = new Date(item.indate);
-            const now = new Date();
-            now.setHours(9);
-            const diff = (now.getTime() - date.getTime()) / (1000 * 3600 * 24);
-            let changeStyle = { color: "white" };
-            let eve = false;
-            if (diff >= -1 && diff < 1) {
-              changeStyle = { color: "red" };
-              eve = true;
-            } else if (diff < -1) {
-              changeStyle = { color: "green" };
-            }
+            const { ddayState, changeStyle, displayDate } = getDateState(item);
             return (
-              <tr
-                key={item.name}
-                onClick={(event) => {
-                  handleItemSelect({
-                    target: event.currentTarget,
-                    tradingKey: key,
-                  });
-                  event.stopPropagation();
-                }}
-              >
+              <tr key={item.name} onClick={handleItemClick}>
                 <td className="item_name">{item.name}</td>
                 <td className="item_price">
                   {String(item.price).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
@@ -80,12 +89,14 @@ function StockTable({ trading, store, handleItemSelect }) {
                 <td
                   className="item_date"
                   style={changeStyle}
-                  originaldate={date}
+                  originaldate={new Date(item.indate)}
                 >
-                  <span className="main_text">
-                    {date.getMonth() + 1 + "/" + date.getDate()}
-                  </span>
-                  {eve && <span className="sub_text">입고예정</span>}
+                  <span className="main_text">{displayDate}</span>
+                  {ddayState > 0 && (
+                    <span className="sub_text" style={{ color: "inherit" }}>
+                      {ddayState === 1 ? "입고완료" : "입고예정"}
+                    </span>
+                  )}
                 </td>
               </tr>
             );

@@ -57,9 +57,9 @@ function AddStock({ setOpen, store, selectedItem, handleItemSelect }) {
         sIndex = ind;
       }
     });
-    sName = selectedItem.target.children[0].innerText;
-    sPrice = selectedItem.target.children[1].innerText.replace(",", "");
-    sQuantity = selectedItem.target.children[2].innerText;
+    sName = selectedItem.target.children[0].textContent;
+    sPrice = selectedItem.target.children[1].textContent.replace(",", "");
+    sQuantity = selectedItem.target.children[2].textContent;
     sDate = new Date(
       selectedItem.target.children[3].getAttribute("originaldate")
     );

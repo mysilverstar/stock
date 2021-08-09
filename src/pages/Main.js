@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Main({ history, store, doLogout }) {
+function Main({ history, store, doLogout, setLoading }) {
   const { authenticate } = store;
 
   const classes = useStyles();
@@ -33,18 +33,25 @@ function Main({ history, store, doLogout }) {
   const [openDel, setOpenDel] = useState(false);
   const [tradings, setTradings] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
-
-  if (!authenticate.isAuth) {
-    history.replace("/");
-  }
+  console.log("Main START");
 
   useEffect(() => {
+    console.log("Main RENDERED");
+    if (!authenticate.isAuth) {
+      console.log("Main goRoot!!");
+      history.replace("/");
+      return;
+    }
+
     const unsubscribe = db
       .collection("user")
       .doc(authenticate?.user)
       .collection("trading")
       .orderBy("priority", "asc")
       .onSnapshot((snapshot) => {
+        setTimeout(() => {
+          setLoading(false);
+        }, 400);
         setTradings(
           snapshot.docs.map((doc) => ({
             key: doc.id,
@@ -53,7 +60,7 @@ function Main({ history, store, doLogout }) {
         );
       });
     return unsubscribe;
-  }, [authenticate]);
+  }, [authenticate, history, setLoading]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -84,7 +91,12 @@ function Main({ history, store, doLogout }) {
     <>
       <header>
         <div className="header_main">
-          <span className="username">{authenticate.user}</span>
+          <div className="title">
+            <span className="main-title">Stock Manager</span>
+            <span className="sub-title">
+              {"@" + authenticate.user?.split("@")[0]}
+            </span>
+          </div>
           <div className="logout" onClick={handleLogout}>
             <span>Logout</span>
             <ExitToAppOutlinedIcon />

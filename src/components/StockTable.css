@@ -29,10 +29,10 @@
 .stocktable th {
   padding: 5px 15px;
   color: gray;
-  border-bottom: thin double gray;
+  border-bottom: thin double #333;
 }
 .stocktable tbody tr {
-  border: solid gray;
+  border: solid #333;
   border-width: 0 0 thin;
 }
 .stocktable tbody tr.selected {

@@ -1,20 +1,16 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import SigninButton from "../components/SigninButton";
-import { login } from "../store/Store";
 import { auth } from "../utils/firebase";
 import "./Login.css";
 
-function Login({ history, doLogin }) {
+function Login({ history, store }) {
+  console.log("Login START");
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        doLogin(user.email);
-        history.push("/main");
-      }
-    });
-    return unsubscribe;
-  }, [history, doLogin]);
+    if (store.authenticate.isAuth) {
+      history.push("/main");
+    }
+  }, [history, store.authenticate.isAuth]);
 
   return (
     <div className="login_main">
@@ -35,10 +31,8 @@ function Login({ history, doLogin }) {
   );
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    doLogin: (user) => dispatch(login({ user: user, isAuth: true })),
-  };
+function mapStateToProps(state) {
+  return { store: state };
 }
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, null)(Login);
