@@ -83,8 +83,12 @@ function Main({ history, store, doLogout, setLoading }) {
 
   const handleItemSelect = (item) => {
     selectedItem?.target.removeAttribute("class");
-    item?.target.setAttribute("class", "selected");
-    setSelectedItem(item);
+    if (selectedItem?.target !== item?.target) {
+      item?.target.setAttribute("class", "selected");
+      setSelectedItem(item);
+    } else {
+      setSelectedItem(null);
+    }
   };
 
   return (
