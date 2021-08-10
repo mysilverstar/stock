@@ -24,7 +24,7 @@ function StockTable({ trading, store, handleItemSelect }) {
     date.setHours(9, 0, 0, 0);
     const now = new Date();
     const diff = (now.getTime() - date.getTime()) / (1000 * 3600 * 24);
-    let changeStyle = { color: "dimgray" };
+    let changeStyle = { color: "gray" };
     let ddayState = 0;
     if (diff >= 0 && diff < 1) {
       changeStyle = { color: "chartreuse" };
