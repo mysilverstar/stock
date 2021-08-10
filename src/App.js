@@ -10,7 +10,7 @@ import LoadingTool from "./components/LoadingTool";
 function App({ store, doLogin }) {
   const { authenticate } = store;
   const [loading, setLoading] = useState(true);
-  console.log("App START");
+  console.log("App START", loading);
 
   useEffect(() => {
     console.log("App RENDERED");
@@ -42,11 +42,23 @@ function App({ store, doLogin }) {
             )
           }
         />
-        <Route exact path="/login" component={Login} />
+        <Route
+          exact
+          path="/login"
+          render={(props) => <Login {...props} setLoading={setLoading} />}
+        />
         <Route
           exact
           path="/main"
           render={(props) => <Main {...props} setLoading={setLoading} />}
+        />
+        <Route
+          exact
+          path="/ipolist"
+          component={() => {
+            window.location.href = "http://sereon.synology.me:38888/po/IPOlist";
+            return null;
+          }}
         />
       </Switch>
     </HashRouter>

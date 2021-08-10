@@ -4,7 +4,7 @@ import SigninButton from "../components/SigninButton";
 import { auth } from "../utils/firebase";
 import "./Login.css";
 
-function Login({ history, store }) {
+function Login({ history, store, setLoading }) {
   console.log("Login START");
   useEffect(() => {
     if (store.authenticate.isAuth) {
@@ -22,6 +22,7 @@ function Login({ history, store }) {
       <div
         className="guest_button"
         onClick={() => {
+          setLoading(true);
           auth.signInWithEmailAndPassword("guest@guest.com", "password");
         }}
       >

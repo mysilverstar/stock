@@ -13,6 +13,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { green } from "@material-ui/core/colors";
 import DeleteStock from "../components/DeleteStock";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   fab: {},
@@ -95,12 +96,14 @@ function Main({ history, store, doLogout, setLoading }) {
     <>
       <header>
         <div className="header_main">
-          <div className="title">
-            <span className="main-title">Stock Manager</span>
-            <span className="sub-title">
-              {"@" + authenticate.user?.split("@")[0]}
-            </span>
-          </div>
+          <Link to="/ipolist" target="_blank" rel="noopener noreferrer">
+            <div className="title">
+              <span className="main-title">Stock Manager</span>
+              <span className="sub-title">
+                {"@" + authenticate.user?.split("@")[0]}
+              </span>
+            </div>
+          </Link>
           <div className="logout" onClick={handleLogout}>
             <span>Logout</span>
             <ExitToAppOutlinedIcon />
