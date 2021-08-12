@@ -35,4 +35,10 @@ export const Tradings = [
     priority: 5,
     color: "#14279b",
   },
+  {
+    key: "sk",
+    display: "SK증권",
+    priority: 6,
+    color: "#e31937",
+  },
 ];
