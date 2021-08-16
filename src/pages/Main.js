@@ -1,5 +1,5 @@
 import "./Main.css";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { logout } from "../store/Store";
 import StockTable from "../components/StockTable";
@@ -82,15 +82,18 @@ function Main({ history, store, doLogout, setLoading }) {
     });
   };
 
-  const handleItemSelect = (item) => {
-    selectedItem?.target.removeAttribute("class");
-    if (selectedItem?.target !== item?.target) {
-      item?.target.setAttribute("class", "selected");
-      setSelectedItem(item);
-    } else {
-      setSelectedItem(null);
-    }
-  };
+  const handleItemSelect = useCallback(
+    (item) => {
+      selectedItem?.target.setAttribute("class", "tr");
+      if (selectedItem?.target !== item?.target) {
+        item?.target.setAttribute("class", "tr selected");
+        setSelectedItem(item);
+      } else {
+        setSelectedItem(null);
+      }
+    },
+    [selectedItem]
+  );
 
   return (
     <>

@@ -1,0 +1,68 @@
+.tableitem {
+  position: relative;
+}
+
+.tableitem .tr-bg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: green;
+  padding-right: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 1px;
+  overflow: hidden;
+}
+.tableitem .tr {
+  position: relative;
+  height: 70px;
+  background-color: #14151a;
+  border: solid thin #333;
+}
+.tableitem .tr.selected {
+  background-color: #1f1f1f;
+}
+.tableitem .tr.swipeout {
+  animation: swipeout 0.5s forwards, hiderow 0.3s linear 0.3s forwards;
+}
+@keyframes swipeout {
+  to {
+    left: -100%;
+  }
+}
+@keyframes hiderow {
+  to {
+    height: 0;
+  }
+}
+
+.tableitem .item {
+  padding: 15px 0;
+  box-sizing: border-box;
+}
+.tableitem .stock_name {
+  padding-left: 3%;
+}
+.tableitem .stock_price {
+  text-align: right;
+  padding-right: 3%;
+}
+.tableitem .stock_quantity {
+  text-align: center;
+}
+.tableitem .stock_indate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.tableitem .main_text {
+  display: block;
+}
+.tableitem .sub_text {
+  font-size: 70%;
+  color: gray;
+}
