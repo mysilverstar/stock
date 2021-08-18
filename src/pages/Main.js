@@ -169,7 +169,6 @@ function Main({ history, store, doLogout, setLoading }) {
         >
           <Fab
             className={classes.fabEdit}
-            color="secondary"
             aria-label="edit"
             onClick={handleOpen}
           >

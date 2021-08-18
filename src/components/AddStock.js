@@ -73,7 +73,7 @@ function AddStock({ setOpen, store, selectedItem, handleItemSelect }) {
   const [date, setDate] = useState(sDate);
 
   const { authenticate } = store;
-  const isModified = selectedItem !== null;
+  const isModified = !!selectedItem;
 
   const handleChangeTrading = (event) => {
     setTradingIndex(event.target.value);
@@ -93,7 +93,7 @@ function AddStock({ setOpen, store, selectedItem, handleItemSelect }) {
   };
   const addItem = (event) => {
     event.preventDefault();
-    if (store.guestLock && authenticate.user === "guest@guest.com") {
+    if (store.guestlock && authenticate.user === "guest@guest.com") {
       alert("please sign-in with private account");
       setOpen(false);
       handleItemSelect(null);

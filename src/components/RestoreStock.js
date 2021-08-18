@@ -30,7 +30,7 @@ function RestoreStock({ setOpen, store, selectedItem, handleItemSelect }) {
   const { authenticate } = store;
 
   const restoreItem = () => {
-    if (store.guestLock && authenticate.user === "guest@guest.com") {
+    if (store.guestlock && authenticate.user === "guest@guest.com") {
       alert("please sign-in with private account");
       setOpen(false);
       handleItemSelect(null);

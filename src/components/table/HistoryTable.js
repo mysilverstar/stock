@@ -70,7 +70,7 @@ function HistoryTable({ trading, store, handleItemSelect }) {
             let profitColor = { color: "white" };
             if (profit > 0) {
               profitColor = { color: "#d24f45" };
-            } else {
+            } else if (profit < 0) {
               profitColor = { color: "#1261c4" };
             }
             return (
@@ -78,7 +78,10 @@ function HistoryTable({ trading, store, handleItemSelect }) {
                 <div className="item stock_name">{item.name}</div>
                 <div className="item stock_profit" style={profitColor}>
                   <span className="main_text">
-                    {String(profit).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    {String(profit.toFixed(0)).replace(
+                      /\B(?=(\d{3})+(?!\d))/g,
+                      ","
+                    )}
                   </span>
                   <span className="sub_text">
                     {profitRatio.toFixed(2) + " %"}

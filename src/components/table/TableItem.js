@@ -70,7 +70,7 @@ function TableItem({ tradingKey, item, handleItemSelect, store }) {
               backupItem.sellprice * backupItem.sellquantity) /
             (data.quantity + backupItem.sellquantity);
           transaction.update(backupRef, {
-            sellprice: avePrice,
+            sellprice: Number(avePrice.toFixed(0)),
             quantity: data.quantity + backupItem.sellquantity,
             outdate: new Date().valueOf(),
           });
