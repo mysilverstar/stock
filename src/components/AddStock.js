@@ -61,7 +61,7 @@ function AddStock({ setOpen, store, selectedItem, handleItemSelect }) {
     sPrice = selectedItem.target.children[1].textContent.replace(",", "");
     sQuantity = selectedItem.target.children[2].textContent;
     sDate = new Date(
-      selectedItem.target.children[3].getAttribute("originaldate")
+      Number(selectedItem.target.children[3].getAttribute("originaldate"))
     );
   }
 
@@ -93,7 +93,7 @@ function AddStock({ setOpen, store, selectedItem, handleItemSelect }) {
   };
   const addItem = (event) => {
     event.preventDefault();
-    if (authenticate.user === "guest@guest.com") {
+    if (store.guestLock && authenticate.user === "guest@guest.com") {
       alert("please sign-in with private account");
       setOpen(false);
       handleItemSelect(null);
@@ -115,11 +115,10 @@ function AddStock({ setOpen, store, selectedItem, handleItemSelect }) {
       .doc(name)
       .set({
         name: name,
-        price: price,
-        quantity: quantity,
+        price: Number(price),
+        quantity: Number(quantity),
         indate: date.valueOf(),
       })
-      .then(() => {})
       .catch((error) => {
         console.error("Error adding document: ", error);
       });
@@ -154,7 +153,7 @@ function AddStock({ setOpen, store, selectedItem, handleItemSelect }) {
             id="name-input"
             value={name}
             onChange={handleNameChange}
-            label="Name"
+            label="종목명"
             required={true}
             disabled={isModified}
           />
@@ -165,7 +164,7 @@ function AddStock({ setOpen, store, selectedItem, handleItemSelect }) {
             id="price-input"
             value={price}
             onChange={handlePriceChange}
-            label="Price"
+            label="단가"
             type="number"
           />
         </FormControl>
@@ -175,7 +174,7 @@ function AddStock({ setOpen, store, selectedItem, handleItemSelect }) {
             id="quantity-input"
             value={quantity}
             onChange={handleQuantityChange}
-            label="Quantity"
+            label="수량"
             type="number"
           />
         </FormControl>
@@ -186,7 +185,7 @@ function AddStock({ setOpen, store, selectedItem, handleItemSelect }) {
             format="MM/dd/yyyy"
             margin="normal"
             id="date-picker-inline"
-            label="Month/Day/Year"
+            label="상장일(Month/Day/Year)"
             value={date}
             onChange={handleDateChange}
             KeyboardButtonProps={{

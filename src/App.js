@@ -6,6 +6,7 @@ import Main from "./pages/Main";
 import { login } from "./store/Store";
 import { auth } from "./utils/firebase";
 import LoadingTool from "./components/LoadingTool";
+import Backup from "./pages/Backup";
 
 function App({ store, doLogin }) {
   const { authenticate } = store;
@@ -51,6 +52,11 @@ function App({ store, doLogin }) {
           exact
           path="/main"
           render={(props) => <Main {...props} setLoading={setLoading} />}
+        />
+        <Route
+          exact
+          path="/backup"
+          render={(props) => <Backup {...props} setLoading={setLoading} />}
         />
         <Route
           exact

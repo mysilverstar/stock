@@ -25,7 +25,7 @@
   text-align: center;
   padding: 5px 0px;
   color: gray;
-  border-bottom: thin double #333;
+  border-bottom: thin solid #333;
 }
 
 .stocktable .stock_name {

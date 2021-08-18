@@ -2,11 +2,12 @@ import "./Main.css";
 import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { logout } from "../store/Store";
-import StockTable from "../components/StockTable";
+import StockTable from "../components/table/StockTable";
 import AddStock from "../components/AddStock";
 import { auth, db } from "../utils/firebase";
 
 import { Modal, Fab, makeStyles } from "@material-ui/core";
+import HistoryIcon from "@material-ui/icons/History";
 import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 import AddIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Edit";
@@ -24,6 +25,14 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: green[600],
     },
   },
+  icon: {
+    color: "gray",
+    fontSize: 30,
+    position: "absolute",
+    left: "20px",
+    top: "50%",
+    transform: "translateY(-50%)",
+  },
 }));
 
 function Main({ history, store, doLogout, setLoading }) {
@@ -33,7 +42,7 @@ function Main({ history, store, doLogout, setLoading }) {
   const [open, setOpen] = useState(false);
   const [openDel, setOpenDel] = useState(false);
   const [tradings, setTradings] = useState([]);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(undefined);
   console.log("Main START");
 
   useEffect(() => {
@@ -46,7 +55,7 @@ function Main({ history, store, doLogout, setLoading }) {
 
     const unsubscribe = db
       .collection("user")
-      .doc(authenticate?.user)
+      .doc(authenticate.user)
       .collection("trading")
       .orderBy("priority", "asc")
       .onSnapshot((snapshot) => {
@@ -84,9 +93,9 @@ function Main({ history, store, doLogout, setLoading }) {
 
   const handleItemSelect = useCallback(
     (item) => {
+      // clear history
       selectedItem?.target.setAttribute("class", "tr");
       if (selectedItem?.target !== item?.target) {
-        item?.target.setAttribute("class", "tr selected");
         setSelectedItem(item);
       } else {
         setSelectedItem(null);
@@ -99,6 +108,13 @@ function Main({ history, store, doLogout, setLoading }) {
     <>
       <header>
         <div className="header_main">
+          <Link
+            to={(location) => {
+              return { ...location, pathname: "/backup" };
+            }}
+          >
+            <HistoryIcon className={classes.icon} />
+          </Link>
           <Link to="/ipolist" target="_blank" rel="noopener noreferrer">
             <div className="title">
               <span className="main-title">Stock Manager</span>
@@ -143,28 +159,32 @@ function Main({ history, store, doLogout, setLoading }) {
           <AddIcon />
         </Fab>
       </div>
-      <div
-        className={
-          selectedItem ? "fab-area select slidein" : "fab-area select slideout"
-        }
-      >
-        <Fab
-          className={classes.fabEdit}
-          color="secondary"
-          aria-label="edit"
-          onClick={handleOpen}
+      {selectedItem !== undefined && (
+        <div
+          className={
+            selectedItem
+              ? "fab-area select slidein"
+              : "fab-area select slideout"
+          }
         >
-          <EditIcon />
-        </Fab>
-        <Fab
-          className={classes.fab}
-          color="secondary"
-          aria-label="delete"
-          onClick={handleOpenDel}
-        >
-          <DeleteIcon />
-        </Fab>
-      </div>
+          <Fab
+            className={classes.fabEdit}
+            color="secondary"
+            aria-label="edit"
+            onClick={handleOpen}
+          >
+            <EditIcon />
+          </Fab>
+          <Fab
+            className={classes.fab}
+            color="secondary"
+            aria-label="delete"
+            onClick={handleOpenDel}
+          >
+            <DeleteIcon />
+          </Fab>
+        </div>
+      )}
       <Modal
         open={open}
         onClose={handleClose}
@@ -182,8 +202,8 @@ function Main({ history, store, doLogout, setLoading }) {
       <Modal
         open={openDel}
         onClose={handleCloseDel}
-        aria-labelledby="add-stock"
-        aria-describedby="add-stock"
+        aria-labelledby="del-stock"
+        aria-describedby="del-stock"
       >
         <div>
           <DeleteStock

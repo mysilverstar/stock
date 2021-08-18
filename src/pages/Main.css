@@ -11,13 +11,15 @@
   background-color: #111111;
   color: gray;
   z-index: 10;
+  display: flex;
+  justify-content: center;
 }
 .header_main .title {
   display: flex;
   flex-direction: column;
-  margin-left: 12px;
-  height: 100%;
+  align-items: center;
   justify-content: space-evenly;
+  height: 100%;
 }
 .header_main a {
   text-decoration: none;
@@ -50,6 +52,7 @@
 
 .fab-area {
   width: 70vw;
+  max-width: 400px;
   display: flex;
   justify-content: space-around;
   position: fixed;

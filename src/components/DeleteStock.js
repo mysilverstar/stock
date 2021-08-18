@@ -20,7 +20,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function DeleteStock({ setOpen, store, selectedItem, handleItemSelect }) {
+function DeleteStock({
+  setOpen,
+  store,
+  selectedItem,
+  handleItemSelect,
+  backup,
+}) {
   if (!selectedItem) {
     setOpen(false);
   }
@@ -30,7 +36,7 @@ function DeleteStock({ setOpen, store, selectedItem, handleItemSelect }) {
   const { authenticate } = store;
 
   const deleteItem = () => {
-    if (authenticate.user === "guest@guest.com") {
+    if (store.guestLock && authenticate.user === "guest@guest.com") {
       alert("please sign-in with private account");
       setOpen(false);
       handleItemSelect(null);
@@ -38,12 +44,11 @@ function DeleteStock({ setOpen, store, selectedItem, handleItemSelect }) {
     }
     db.collection("user")
       .doc(authenticate.user)
-      .collection("trading")
+      .collection(backup ? "backup" : "trading")
       .doc(selectedItem.tradingKey)
       .collection("items")
       .doc(name)
       .delete()
-      .then(() => {})
       .catch((error) => {
         console.error("Error removing document: ", error);
       });

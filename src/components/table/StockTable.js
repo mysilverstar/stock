@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { db } from "../utils/firebase";
-// import useLongPress from "../utils/useLongPress";
+import { db } from "../../utils/firebase";
 import "./StockTable.css";
 import TableItem from "./TableItem";
 
