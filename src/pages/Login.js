@@ -6,11 +6,13 @@ import "./Login.css";
 
 function Login({ history, store, setLoading }) {
   console.log("Login START");
+  const { authenticate } = store;
+
   useEffect(() => {
-    if (store.authenticate.isAuth) {
+    if (authenticate.checked && authenticate.isAuth) {
       history.push("/main");
     }
-  }, [history, store.authenticate.isAuth]);
+  }, [history, authenticate]);
 
   return (
     <div className="login_main">

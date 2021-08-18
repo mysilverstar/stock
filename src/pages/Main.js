@@ -1,7 +1,7 @@
 import "./Main.css";
 import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { logout } from "../store/Store";
+import { logon } from "../store/Store";
 import StockTable from "../components/table/StockTable";
 import AddStock from "../components/AddStock";
 import { auth, db } from "../utils/firebase";
@@ -15,6 +15,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { green } from "@material-ui/core/colors";
 import DeleteStock from "../components/DeleteStock";
 import { Link } from "react-router-dom";
+import LoadingTool from "../components/LoadingTool";
 
 const useStyles = makeStyles((theme) => ({
   fab: {},
@@ -35,7 +36,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Main({ history, store, doLogout, setLoading }) {
+function Main({ history, store, setUser, setLoading }) {
+  console.log("Main START");
   const { authenticate } = store;
 
   const classes = useStyles();
@@ -43,11 +45,11 @@ function Main({ history, store, doLogout, setLoading }) {
   const [openDel, setOpenDel] = useState(false);
   const [tradings, setTradings] = useState([]);
   const [selectedItem, setSelectedItem] = useState(undefined);
-  console.log("Main START");
+  const [reloading, setReloading] = useState(true);
 
   useEffect(() => {
     console.log("Main RENDERED");
-    if (!authenticate.isAuth) {
+    if (authenticate.checked && !authenticate.isAuth) {
       console.log("Main goRoot!!");
       history.replace("/");
       return;
@@ -59,15 +61,16 @@ function Main({ history, store, doLogout, setLoading }) {
       .collection("trading")
       .orderBy("priority", "asc")
       .onSnapshot((snapshot) => {
-        setTimeout(() => {
-          setLoading(false);
-        }, 500);
         setTradings(
           snapshot.docs.map((doc) => ({
             key: doc.id,
             data: doc.data(),
           }))
         );
+        setTimeout(() => {
+          setLoading(false);
+          setReloading(false);
+        }, 500);
       });
     return unsubscribe;
   }, [authenticate, history, setLoading]);
@@ -87,7 +90,7 @@ function Main({ history, store, doLogout, setLoading }) {
 
   const handleLogout = () => {
     auth.signOut().then(() => {
-      doLogout(false);
+      setUser(undefined);
     });
   };
 
@@ -108,11 +111,7 @@ function Main({ history, store, doLogout, setLoading }) {
     <>
       <header>
         <div className="header_main">
-          <Link
-            to={(location) => {
-              return { ...location, pathname: "/backup" };
-            }}
-          >
+          <Link to="/backup">
             <HistoryIcon className={classes.icon} />
           </Link>
           <Link to="/ipolist" target="_blank" rel="noopener noreferrer">
@@ -129,6 +128,7 @@ function Main({ history, store, doLogout, setLoading }) {
           </div>
         </div>
       </header>
+      {reloading && <LoadingTool />}
       <div
         className="main"
         onClick={() => {
@@ -222,7 +222,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    doLogout: () => dispatch(logout()),
+    setUser: (user) => dispatch(logon(user)),
   };
 }
 

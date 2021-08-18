@@ -11,6 +11,7 @@ import { Fab, makeStyles, Modal } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import DeleteStock from "../components/DeleteStock";
 import RestoreStock from "../components/RestoreStock";
+import LoadingTool from "../components/LoadingTool";
 
 const useStyles = makeStyles({
   fab: {},
@@ -28,6 +29,7 @@ const useStyles = makeStyles({
 });
 
 function Backup({ history, store, setLoading }) {
+  console.log("Backup START");
   const classes = useStyles();
   const { authenticate } = store;
 
@@ -35,10 +37,11 @@ function Backup({ history, store, setLoading }) {
   const [openRestore, setOpenRestore] = useState(false);
   const [openDel, setOpenDel] = useState(false);
   const [selectedItem, setSelectedItem] = useState(undefined);
+  const [reloading, setReloading] = useState(true);
 
   useEffect(() => {
     console.log("Backup RENDERED");
-    if (!authenticate.isAuth) {
+    if (authenticate.checked && !authenticate.isAuth) {
       console.log("Backup goRoot!!");
       history.replace("/");
       return;
@@ -50,13 +53,16 @@ function Backup({ history, store, setLoading }) {
       .collection("backup")
       .orderBy("priority", "asc")
       .onSnapshot((snapshot) => {
-        setLoading(false);
         setTradings(
           snapshot.docs.map((doc) => ({
             key: doc.id,
             data: doc.data(),
           }))
         );
+        setTimeout(() => {
+          setLoading(false);
+          setReloading(false);
+        }, 500);
       });
     return unsubscribe;
   }, [authenticate, history, setLoading]);
@@ -98,6 +104,7 @@ function Backup({ history, store, setLoading }) {
           </div>
         </div>
       </header>
+      {reloading && <LoadingTool />}
       <div
         className="backup"
         onClick={() => {

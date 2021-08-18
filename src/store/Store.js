@@ -3,14 +3,17 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 export const Store = createSlice({
   name: "ReduxStore",
   initialState: {
-    authenticate: { user: undefined, isAuth: false },
+    authenticate: { user: undefined, isAuth: false, checked: false },
     guestlock: true,
   },
   reducers: {
-    login: (state, action) => ({ ...state, authenticate: action.payload }),
-    logout: (state, action) => ({
+    logon: (state, action) => ({
       ...state,
-      authenticate: { user: undefined, isAuth: false },
+      authenticate: {
+        user: action.payload,
+        isAuth: !!action.payload,
+        checked: true,
+      },
     }),
     testmode: (state, action) => ({ ...state, guestlock: !action.payload }),
   },
@@ -18,6 +21,6 @@ export const Store = createSlice({
 
 const store = configureStore({ reducer: Store.reducer });
 
-export const { login, logout, testmode } = Store.actions;
+export const { logon, testmode } = Store.actions;
 
 export default store;

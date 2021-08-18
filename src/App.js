@@ -3,30 +3,29 @@ import { connect } from "react-redux";
 import { HashRouter, Redirect, Route, Switch } from "react-router-dom";
 import Login from "./pages/Login";
 import Main from "./pages/Main";
-import { login } from "./store/Store";
+import { logon } from "./store/Store";
 import { auth } from "./utils/firebase";
 import LoadingTool from "./components/LoadingTool";
 import Backup from "./pages/Backup";
 
-function App({ store, doLogin }) {
-  const { authenticate } = store;
+function App({ store, setUser }) {
   const [loading, setLoading] = useState(true);
-  console.log("App START", loading);
+  console.log("App START", "loading: " + loading);
+  const { authenticate } = store;
 
   useEffect(() => {
-    console.log("App RENDERED");
+    console.log("App RENDERED - registering");
     const unsubscribe = auth.onAuthStateChanged((user) => {
       console.log("App onAuthStateChanged", user);
-      if (user) {
-        doLogin(user.email);
-      } else {
+      setUser(user?.email);
+      if (!user) {
         setTimeout(() => {
           setLoading(false);
         }, 500);
       }
     });
     return unsubscribe;
-  }, [doLogin]);
+  }, [setUser]);
 
   return (
     <HashRouter>
@@ -76,7 +75,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    doLogin: (user) => dispatch(login({ user: user, isAuth: true })),
+    setUser: (user) => dispatch(logon(user)),
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);
