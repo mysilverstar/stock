@@ -4,7 +4,7 @@ export const Store = createSlice({
   name: "ReduxStore",
   initialState: {
     authenticate: { user: undefined, isAuth: false },
-    guestLock: false,
+    guestLock: true,
   },
   reducers: {
     login: (state, action) => {
