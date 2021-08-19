@@ -38,9 +38,9 @@ const useStyles = makeStyles((theme) => ({
 
 function Main({ history, store, setUser, setLoading }) {
   console.log("Main START");
+  const classes = useStyles();
   const { authenticate } = store;
 
-  const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [openDel, setOpenDel] = useState(false);
   const [tradings, setTradings] = useState([]);

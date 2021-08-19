@@ -39,6 +39,7 @@ function Backup({ history, store, setLoading }) {
   const [openDel, setOpenDel] = useState(false);
   const [selectedItem, setSelectedItem] = useState(undefined);
   const [reloading, setReloading] = useState(true);
+  const [finance, setFinance] = useState({});
 
   useEffect(() => {
     console.log("Backup RENDERED");
@@ -118,12 +119,13 @@ function Backup({ history, store, setLoading }) {
             <p>백업된 자료가 없습니다.</p>
           </div>
         )}
-        {tradings.length > 0 && <ProfitTable />}
+        {tradings.length > 0 && <ProfitTable finance={finance} />}
         {tradings.map((trading) => (
           <HistoryTable
             key={trading.key}
             trading={trading}
             handleItemSelect={handleItemSelect}
+            setFinance={setFinance}
           />
         ))}
       </div>

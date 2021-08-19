@@ -9,9 +9,10 @@ import LoadingTool from "./pages/LoadingTool";
 import Backup from "./pages/Backup";
 
 function App({ store, setUser }) {
-  const [loading, setLoading] = useState(true);
-  console.log("App START", "loading: " + loading);
   const { authenticate } = store;
+  console.log("App START");
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     console.log("App RENDERED - registering");

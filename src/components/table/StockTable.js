@@ -5,11 +5,11 @@ import "./StockTable.css";
 import TableItem from "./TableItem";
 
 function StockTable({ trading, store, handleItemSelect }) {
-  const [items, setItems] = useState([]);
-
   const { key: tradingKey, data } = trading;
   const { color, display } = data;
   const { authenticate } = store;
+
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     const unsubscribe = db

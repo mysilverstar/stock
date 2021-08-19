@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import { db } from "../../utils/firebase";
 import "./HistoryTable.css";
 
-function HistoryTable({ trading, store, handleItemSelect }) {
-  const [items, setItems] = useState([]);
-  const [totalProfit, setTotalProfit] = useState(0);
+function HistoryTable({ trading, store, handleItemSelect, setFinance }) {
   const { key: tradingKey, data } = trading;
   const { color, display } = data;
   const { authenticate } = store;
+
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     const unsubscribe = db
@@ -20,15 +20,22 @@ function HistoryTable({ trading, store, handleItemSelect }) {
       .orderBy("outdate", "desc")
       .onSnapshot((snapshot) => {
         if (snapshot.size > 0) {
-          let profit = 0;
+          let priceSum = 0;
+          let sellpriceSum = 0;
           setItems(
             snapshot.docs.map((doc) => {
               const data = doc.data();
-              profit += (data.sellprice - data.price) * data.quantity;
+              priceSum += data.price * data.quantity;
+              sellpriceSum += data.sellprice * data.quantity;
               return data;
             })
           );
-          setTotalProfit(profit);
+          setFinance((finance) => ({
+            ...finance,
+            ...{
+              [tradingKey]: { price: priceSum, sellprice: sellpriceSum },
+            },
+          }));
         } else {
           db.collection("user")
             .doc(authenticate.user)
@@ -38,7 +45,7 @@ function HistoryTable({ trading, store, handleItemSelect }) {
         }
       });
     return unsubscribe;
-  }, [authenticate, tradingKey]);
+  }, [authenticate, tradingKey, setFinance]);
 
   const handleItemClick = useCallback(
     (e) => {
@@ -87,10 +94,7 @@ function HistoryTable({ trading, store, handleItemSelect }) {
                 <div className="item stock_name">{item.name}</div>
                 <div className="item stock_profit" style={profitColor}>
                   <span className="main_text">
-                    {String(profit.toFixed(0)).replace(
-                      /\B(?=(\d{3})+(?!\d))/g,
-                      ","
-                    )}
+                    {profit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </span>
                   <span className="sub_text">
                     {profitRatio.toFixed(2) + " %"}

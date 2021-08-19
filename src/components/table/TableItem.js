@@ -8,10 +8,11 @@ import "./TableItem.css";
 
 function TableItem({ tradingKey, item, handleItemSelect, store }) {
   const { authenticate } = store;
+
+  const isMounted = useRef(false);
   const [swipeItem, setSwipeItem] = useState(null);
   const [backupItem, setBackupItem] = useState(null);
   const [open, setOpen] = useState(false);
-  const isMounted = useRef(false);
 
   const getDateState = (item) => {
     const date = new Date(item.indate);

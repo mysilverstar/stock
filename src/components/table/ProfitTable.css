@@ -1,12 +1,13 @@
 .profittable {
   width: 100%;
   max-width: 600px;
-  margin: 10px auto 30px;
+  margin: 0 auto 50px;
   border: thin solid #333;
+  box-sizing: border-box;
 }
 .profittable .tr {
   display: flex;
-  height: 50px;
+  height: 40px;
   align-items: center;
 }
 

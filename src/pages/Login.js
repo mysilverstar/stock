@@ -5,8 +5,8 @@ import { auth } from "../utils/firebase";
 import "./Login.css";
 
 function Login({ history, store, setLoading }) {
-  console.log("Login START");
   const { authenticate } = store;
+  console.log("Login START");
 
   useEffect(() => {
     if (authenticate.checked && authenticate.isAuth) {

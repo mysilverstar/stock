@@ -15,7 +15,6 @@ export const Store = createSlice({
         checked: true,
       },
     }),
-    //updatefinance: (state, action) => ({ ...state, finance: {action} }),
     testmode: (state, action) => ({ ...state, guestlock: !action.payload }),
   },
 });
