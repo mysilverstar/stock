@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import DeleteStock from "../components/input/DeleteStock";
 import RestoreStock from "../components/input/RestoreStock";
 import LoadingTool from "./LoadingTool";
+import ProfitTable from "../components/table/ProfitTable";
 
 const useStyles = makeStyles({
   fab: {},
@@ -117,6 +118,7 @@ function Backup({ history, store, setLoading }) {
             <p>백업된 자료가 없습니다.</p>
           </div>
         )}
+        {tradings.length > 0 && <ProfitTable />}
         {tradings.map((trading) => (
           <HistoryTable
             key={trading.key}

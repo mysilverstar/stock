@@ -5,6 +5,7 @@ import "./HistoryTable.css";
 
 function HistoryTable({ trading, store, handleItemSelect }) {
   const [items, setItems] = useState([]);
+  const [totalProfit, setTotalProfit] = useState(0);
   const { key: tradingKey, data } = trading;
   const { color, display } = data;
   const { authenticate } = store;
@@ -19,7 +20,15 @@ function HistoryTable({ trading, store, handleItemSelect }) {
       .orderBy("outdate", "desc")
       .onSnapshot((snapshot) => {
         if (snapshot.size > 0) {
-          setItems(snapshot.docs.map((doc) => doc.data()));
+          let profit = 0;
+          setItems(
+            snapshot.docs.map((doc) => {
+              const data = doc.data();
+              profit += (data.sellprice - data.price) * data.quantity;
+              return data;
+            })
+          );
+          setTotalProfit(profit);
         } else {
           db.collection("user")
             .doc(authenticate.user)
