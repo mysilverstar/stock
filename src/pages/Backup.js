@@ -9,9 +9,9 @@ import RestoreFromTrashIcon from "@material-ui/icons/RestoreFromTrash";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Fab, makeStyles, Modal } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import DeleteStock from "../components/DeleteStock";
-import RestoreStock from "../components/RestoreStock";
-import LoadingTool from "../components/LoadingTool";
+import DeleteStock from "../components/input/DeleteStock";
+import RestoreStock from "../components/input/RestoreStock";
+import LoadingTool from "./LoadingTool";
 
 const useStyles = makeStyles({
   fab: {},

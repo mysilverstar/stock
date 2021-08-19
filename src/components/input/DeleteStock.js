@@ -1,5 +1,5 @@
 import React from "react";
-import { db } from "../utils/firebase";
+import { db } from "../../utils/firebase";
 import { Button, DialogActions, makeStyles } from "@material-ui/core";
 import { connect } from "react-redux";
 

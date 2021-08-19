@@ -5,7 +5,7 @@ import Login from "./pages/Login";
 import Main from "./pages/Main";
 import { logon } from "./store/Store";
 import { auth } from "./utils/firebase";
-import LoadingTool from "./components/LoadingTool";
+import LoadingTool from "./pages/LoadingTool";
 import Backup from "./pages/Backup";
 
 function App({ store, setUser }) {

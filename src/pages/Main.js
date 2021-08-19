@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { logon } from "../store/Store";
 import StockTable from "../components/table/StockTable";
-import AddStock from "../components/AddStock";
+import AddStock from "../components/input/AddStock";
 import { auth, db } from "../utils/firebase";
 
 import { Modal, Fab, makeStyles } from "@material-ui/core";
@@ -13,9 +13,9 @@ import AddIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { green } from "@material-ui/core/colors";
-import DeleteStock from "../components/DeleteStock";
+import DeleteStock from "../components/input/DeleteStock";
 import { Link } from "react-router-dom";
-import LoadingTool from "../components/LoadingTool";
+import LoadingTool from "./LoadingTool";
 
 const useStyles = makeStyles((theme) => ({
   fab: {},

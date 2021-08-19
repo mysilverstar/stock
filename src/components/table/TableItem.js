@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import { Tradings } from "../../constants/Trading";
 import { db } from "../../utils/firebase";
-import BackupStock from "../BackupStock";
+import BackupStock from "../input/BackupStock";
 import "./TableItem.css";
 
 function TableItem({ tradingKey, item, handleItemSelect, store }) {

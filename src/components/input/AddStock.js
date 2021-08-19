@@ -14,9 +14,9 @@ import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
-import { db } from "../utils/firebase";
+import { db } from "../../utils/firebase";
 import { connect } from "react-redux";
-import { Tradings } from "../constants/Trading";
+import { Tradings } from "../../constants/Trading";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
