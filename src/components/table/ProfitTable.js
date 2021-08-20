@@ -25,13 +25,13 @@ function ProfitTable({ finance }) {
   return (
     <div className="profittable">
       <div className="tr">
-        <div className="th">총평가손익</div>
+        <div className="th">총 실현손익</div>
         <div className="td" style={profitColor}>
           {String(profit).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
         </div>
       </div>
       <div className="tr">
-        <div className="th">총평가수익률</div>
+        <div className="th">총 실현수익률</div>
         <div className="td" style={profitColor}>
           {profitRatio.toFixed(2)}%
         </div>
